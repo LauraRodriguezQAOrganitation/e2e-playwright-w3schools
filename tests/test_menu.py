@@ -13,8 +13,8 @@ def test_visit_menu_links(page: Page):
         cookie_frame.get_by_role("button", name="Accept all").click()
     except:
         pass
-
-    # ---------- HTML ----------
+    
+    #HTML
     print("And click on HTML menu")
     page.get_by_role("link", name="HTML", exact=True).click()
 
@@ -30,7 +30,7 @@ def test_visit_menu_links(page: Page):
     expect(page).to_have_url(re.compile("css"))
     expect(page).to_have_title("CSS Tutorial")
 
-    # ---------- JAVASCRIPT ----------
+    #JAVASCRIPT
     print("And click on JAVASCRIPT menu")
     page.get_by_role("link", name="JAVASCRIPT", exact=True).click()
 
@@ -38,7 +38,7 @@ def test_visit_menu_links(page: Page):
     expect(page).to_have_url(re.compile("js"))
     expect(page).to_have_title("JavaScript Tutorial")
 
-    # ---------- SQL ----------
+    #SQL
     print("And click on SQL menu")
     page.get_by_role("link", name="SQL", exact=True).click()
 
@@ -46,7 +46,7 @@ def test_visit_menu_links(page: Page):
     expect(page).to_have_url(re.compile("sql"))
     expect(page).to_have_title("SQL Tutorial")
 
-    # ---------- PYTHON ----------
+    #PYTHON
     print("And click on PYTHON menu")
     page.get_by_role("link", name="PYTHON", exact=True).click()
 
