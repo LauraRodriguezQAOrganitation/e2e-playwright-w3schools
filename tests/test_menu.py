@@ -1,28 +1,24 @@
 from playwright.sync_api import Page, expect
 import re
 
-
 def test_visit_menu_links(page: Page):
 
     print("Given the user visits W3Schools homepage")
     page.goto("https://www.w3schools.com/")
 
-    print("When the user accepts cookies (if present)")
-    try:
-        cookie_frame = page.frame_locator("iframe[title='FastCMP']")
-        cookie_frame.get_by_role("button", name="Accept all").click()
-    except:
-        pass
-    
+    print("When the page is loaded")
+    page.wait_for_url("https://www.w3schools.com/")
+
     #HTML
     print("And click on HTML menu")
     page.get_by_role("link", name="HTML", exact=True).click()
 
     print("Then user should be on HTML Tutorial page")
+    expect(page).to_have_url("https://www.w3schools.com/html/default.asp")
     expect(page).to_have_url(re.compile("html"))
     expect(page).to_have_title("HTML Tutorial")
 
-    # ---------- CSS ----------
+    #CSS
     print("And click on CSS menu")
     page.get_by_role("link", name="CSS", exact=True).click()
 
