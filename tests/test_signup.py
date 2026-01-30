@@ -1,7 +1,22 @@
 from playwright.sync_api import Page, expect
+import uuid
 
+def generar_email_aleatorio():
+    textounico= uuid.uuid4().hex
+    random_email = textounico + "@test.com"
+    return random_email
 
-# TEST 1: EMAIL VACÍO
+#TEST 1: EMAIL ALEATORIO
+def test_signup_with_valid_email(page:Page):
+    print("Given the user opens W3Schools signup page")
+    page.goto("https://profile.w3schools.com/signup")
+
+    print ("When the user fill email with valid email")
+    page.get_by_placeholder("email").clear()
+    email = generar_email_aleatorio()
+    page.get_by_placeholder("email").fill(email)
+
+#TEST 2: EMAIL VACÍO
 def test_signup_with_empty_email(page: Page):
     print("Given the user opens W3Schools signup page")
     page.goto("https://profile.w3schools.com/signup")
@@ -23,7 +38,7 @@ def test_signup_with_empty_email(page: Page):
     expect(page.get_by_text("Please fill in all fields")).to_be_visible()
 
 
-# TEST 2: CONTRASEÑA VACÍA
+#TEST 2: CONTRASEÑA VACÍA
 def test_signup_with_empty_password(page: Page):
     print("Given the user opens W3Schools signup page")
     page.goto("https://profile.w3schools.com/signup")

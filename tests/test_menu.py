@@ -58,3 +58,12 @@ def test_visit_menu_links(page: Page):
     expect(page).to_have_url(re.compile("python"))
     expect(page).to_have_title("Python Tutorial")
     expect(page.get_by_role("heading", name="Python Tutorial", exact=True)).to_be_visible
+
+    #JAVA
+    print("And click on JAVA menu")
+    page.get_by_role("link", name="JAVA", exact=True).click()
+
+    print("Then the user should be on Java Tutorial page")
+    expect(page).to_have_url("https://www.w3schools.com/java/default.asp")
+    expect(page).to_have_title("Java Tutorial")
+    expect(page.get_by_role("heading", name=" Tutorial", exact=True)).to_be_visible
