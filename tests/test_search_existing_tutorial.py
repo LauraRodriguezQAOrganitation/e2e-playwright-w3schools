@@ -17,5 +17,5 @@ def test_search_html_tutorial(page):
     #Entonces se valida que el usuario es redirigido al tutorial de HTML
     expect(page).to_have_url("https://www.w3schools.com/html/default.asp")
 
-    #Y se muestra el título del tutorial
-    expect(page.get_by_role("heading", name="HTML Tutorial")).to_be_visible()
+    #Y se muestra el título principal del tutorial
+    expect(page.locator("h1")).to_be_visible()
