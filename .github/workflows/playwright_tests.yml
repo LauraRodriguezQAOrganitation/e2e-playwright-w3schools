@@ -3,14 +3,15 @@ name: Playwright Tests
 on:
   push:
   schedule:
-    - cron: '0 0 * * 0'  # Este cron ejecuta el workflow todos los domingos a medianoche UTC
-  workflow_dispatch:  # Permite ejecutar el flujo de trabajo manualmente desde la interfaz de GitHub
+    - cron: '0 0 * * 0'  # Domingos a medianoche UTC
+  workflow_dispatch:
 
 
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
 
@@ -27,21 +28,39 @@ jobs:
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
 
-    - name: Run tests on desktop
+    # 🖥️ DESKTOP
+    - name: Run tests on Desktop
       run: |
-        pytest --capture=tee-sys --html=resultsdesktop.html --self-contained-html --device="Desktop Chrome" --video=on
+        pytest -m "not mobile" \
+               --capture=tee-sys \
+               --html=results-desktop.html \
+               --self-contained-html
 
-    - name: Upload Playwright report (Desktop)
+    - name: Upload Desktop report
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report-desktop
-        path: resultsdesktop.html
+        path: results-desktop.html
+
+    # 📱 MOBILE
+    - name: Run tests on Mobile
+      run: |
+        pytest -m mobile \
+               --capture=tee-sys \
+               --html=results-mobile.html \
+               --self-contained-html
+
+    - name: Upload Mobile report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report-mobile
+        path: results-mobile.html
 
     - name: Upload Test Results
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: playwright-videos-traces
+        name: playwright-test-results
         path: test-results/
-
